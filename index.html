@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numbers and Numerals with Asyl</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Pastel Dream -->
+    <!-- Application Structure Plan: A single-page, scrolling application divided into three main interactive sections: 'Learn', 'Practice Zone', and 'Creative Corner'. The 'Learn' section has been expanded into a detailed, scrollable guide to provide a full grammar reference. The 'Practice Zone' has been significantly expanded with more questions to ensure memorization and mastery. This structure guides the user from in-depth learning to active application through an interactive quiz, and finally to creative expression, creating a comprehensive and progressive learning experience. -->
+    <!-- Visualization & Content Choices: Report Info: Practice tasks (Tasks 1-5). Goal: Gamify practice and show progress. Viz/Presentation: Interactive input fields with 'Check' buttons and a dynamic horizontal bar chart from Chart.js to display the score. Interaction: Users type answers, get immediate feedback (correct/incorrect messages), and the score chart updates in real-time upon correct answers. Justification: This transforms static exercises into an interactive quiz, providing instant gratification and a clear visual representation of their success, which is more motivating for a young learner. Library/Method: Vanilla JS for quiz logic, Chart.js for the progress chart. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF8F0;
+            color: #4A4A4A;
+        }
+        .card-accent-1 { border-left: 4px solid #FFA07A; }
+        .card-accent-2 { border-left: 4px solid #98D8C8; }
+        .card-accent-3 { border-left: 4px solid #F0E68C; }
+        .card-accent-4 { border-left: 4px solid #DDA0DD; }
+        .btn-primary {
+            background-color: #FF7F50;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #FF6347;
+            transform: translateY(-2px);
+        }
+        .quiz-input {
+            border-color: #98D8C8;
+        }
+        .quiz-input:focus {
+            ring-color: #FFA07A;
+            border-color: #FFA07A;
+        }
+        .feedback {
+            transition: opacity 0.5s ease;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 150px;
+            max-height: 200px;
+        }
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, #FFA07A, #98D8C8, #F0E68C);
+            border: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Numbers and Numerals with <span class="text-[#FF7F50]">Asyl🤍</span></h1>
+            <p class="mt-4 text-lg text-gray-600">Hey Asylaiym, welcome to your numbers adventure! Let's make learning fun. 🔢✨</p>
+        </header>
+
+        <main>
+            <!-- Learn Section -->
+            <section id="learn" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-8">Part 1: The Learning Hub 🧠</h2>
+                <p class="text-center text-gray-600 mb-8">Let's dive deep into the rules of numbers. Read through these to master the basics!</p>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-[#FFA07A]">Cardinal Numbers: How to Count</h3>
+                    <p class="mb-4 text-gray-700">These numbers are for counting things. You use them to answer "How many?".</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><b>Numbers 1 to 10:</b> These are all single words (one, two, three...). For example, I have <span class="font-bold text-[#FF7F50]">two</span> volleyballs. 🏐</li>
+                        <li><b>Numbers 11 to 19:</b> These are also single words that end in "-teen" or are special cases (eleven, twelve, fifteen...). For example, Adele has won <span class="font-bold text-[#FF7F50]">fifteen</span> Grammy Awards.</li>
+                        <li><b>Multiples of 10:</b> These end in "-ty" (twenty, thirty, forty...). For example, our class has <span class="font-bold text-[#FF7F50]">twenty</span> students.</li>
+                        <li><b>Compound Numbers:</b> For numbers from 21 to 99, you connect the tens and ones with a hyphen (e.g., twenty-one, fifty-seven). For example, there are <span class="font-bold text-[#FF7F50]">twenty-three</span> students in our class.</li>
+                        <li><b>Large Numbers:</b> For hundreds, thousands, and millions, you connect the number with the word (e.g., one hundred, five thousand). For example, it will cost a few <span class="font-bold text-[#FF7F50]">thousand</span> dollars to visit Italy.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-[#98D8C8]">Ordinal Numbers: How to Rank</h3>
+                    <p class="mb-4 text-gray-700">These numbers show order or position. You use them to answer "What is the order?".</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><b>Rule:</b> The general rule is to add "-th" to the end of the cardinal number (e.g., fourth, fifth, sixth).</li>
+                        <li><b>Special Cases:</b> The first three are special! (first, second, third). For example, you are in <span class="font-bold text-[#FF7F50]">first</span> place! 🏆</li>
+                        <li><b>Tricky Ones:</b> The numbers that end with "1", "2", or "3" are also special, but only if the tens digit is not "1".
+                            <ul class="list-disc list-inside ml-6 mt-2 space-y-1 text-gray-700">
+                                <li>1st → first, but 21st → twenty-first</li>
+                                <li>2nd → second, but 32nd → thirty-second</li>
+                                <li>3rd → third, but 53rd → fifty-third</li>
+                            </ul>
+                        </li>
+                        <li><b>More Tricky Ones:</b> The "teens" are all irregular and end in "-th".
+                            <ul class="list-disc list-inside ml-6 mt-2 space-y-1 text-gray-700">
+                                <li>11th → <span class="font-bold text-[#FF7F50]">eleventh</span> (not elevententh)</li>
+                                <li>12th → <span class="font-bold text-[#FF7F50]">twelfth</span> (not twelveth)</li>
+                                <li>13th → <span class="font-bold text-[#FF7F50]">thirteenth</span> (not thirteenthth)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <hr class="section-divider my-12">
+
+            <!-- Practice Section -->
+            <section id="practice" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-4">Part 2: Practice Zone! 📝</h2>
+                 <p class="text-center text-gray-600 mb-8">Time to test your skills. Let's see how many you can get right!</p>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                     <h3 class="text-xl font-semibold mb-2 text-center">Your Score</h3>
+                     <div class="chart-container">
+                        <canvas id="scoreChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Task 1: Word Up! -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Task 1: Word Up! (Write the numeral as a word)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="q1" class="block mb-1">17:</label>
+                                <input type="text" id="q1" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q1">Check</button>
+                                <p id="f1" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q2" class="block mb-1">26:</label>
+                                <input type="text" id="q2" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q2">Check</button>
+                                <p id="f2" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q3" class="block mb-1">8:</label>
+                                <input type="text" id="q3" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q3">Check</button>
+                                <p id="f3" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q4" class="block mb-1">15:</label>
+                                <input type="text" id="q4" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q4">Check</button>
+                                <p id="f4" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q5" class="block mb-1">54:</label>
+                                <input type="text" id="q5" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q5">Check</button>
+                                <p id="f5" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q6" class="block mb-1">99:</label>
+                                <input type="text" id="q6" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q6">Check</button>
+                                <p id="f6" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task 2: Numeral Power! -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Task 2: Numeral Power! (Write the word as a numeral)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="q7" class="block mb-1">forty-two:</label>
+                                <input type="text" id="q7" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q7">Check</button>
+                                <p id="f7" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q8" class="block mb-1">one hundred:</label>
+                                <input type="text" id="q8" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q8">Check</button>
+                                <p id="f8" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q9" class="block mb-1">eighty-three:</label>
+                                <input type="text" id="q9" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q9">Check</button>
+                                <p id="f9" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q10" class="block mb-1">thirteen:</label>
+                                <input type="text" id="q10" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q10">Check</button>
+                                <p id="f10" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task 3: Spelling and Ordinals Quiz -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Task 3: Spelling and Ordinals Quiz 🥇</h3>
+                        <p class="mb-4 text-gray-700">Can you write these correctly? Watch out for tricky spellings and ordinal rules!</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="q11" class="block mb-1">How do you write the ordinal for 11?</label>
+                                <input type="text" id="q11" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q11">Check</button>
+                                <p id="f11" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q12" class="block mb-1">Spell the number 40:</label>
+                                <input type="text" id="q12" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q12">Check</button>
+                                <p id="f12" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q13" class="block mb-1">Write the ordinal for 22:</label>
+                                <input type="text" id="q13" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q13">Check</button>
+                                <p id="f13" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q14" class="block mb-1">Spell the number 90:</label>
+                                <input type="text" id="q14" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q14">Check</button>
+                                <p id="f14" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q15" class="block mb-1">Write the ordinal for 12:</label>
+                                <input type="text" id="q15" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q15">Check</button>
+                                <p id="f15" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                            <div>
+                                <label for="q16" class="block mb-1">Write the ordinal for 31:</label>
+                                <input type="text" id="q16" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q16">Check</button>
+                                <p id="f16" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task 4 & 5 -->
+                     <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Task 4 & 5: Fix It & Quick Math!</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="q17" class="block mb-1">Correct this: <i>I am twelveth in line.</i></label>
+                                <input type="text" id="q17" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q17">Check</button>
+                                <p id="f17" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q18" class="block mb-1">Write the answer in words: <b>10 + 5 = ?</b></label>
+                                <input type="text" id="q18" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q18">Check</button>
+                                <p id="f18" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q19" class="block mb-1">Correct this: <i>The thirtieth first chapter was great.</i></label>
+                                <input type="text" id="q19" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q19">Check</button>
+                                <p id="f19" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                             <div>
+                                <label for="q20" class="block mb-1">Write the answer in words: <b>8 + 10 = ?</b></label>
+                                <input type="text" id="q20" class="w-full p-2 border-2 rounded-md quiz-input">
+                                <button class="btn-primary px-4 py-2 rounded-md mt-2" data-question="q20">Check</button>
+                                <p id="f20" class="feedback opacity-0 mt-1 h-4"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="section-divider my-12">
+
+            <!-- Creative Section -->
+            <section id="creative">
+                 <h2 class="text-3xl font-bold text-center mb-8">Part 3: Creative Corner 🎨</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div class="bg-white p-6 rounded-lg shadow-lg">
+                         <h3 class="text-2xl font-semibold mb-4 text-center">Ticket to Italy ✈️</h3>
+                         <p class="mb-4 text-center">Practice this role-play with a friend or family member!</p>
+                         <div class="bg-gray-100 p-4 rounded-lg text-gray-800">
+                             <p><b>You:</b> Hello, how much is the ticket to Rome, please?</p>
+                             <p><b>Agent:</b> It's <b>two hundred fifty</b> dollars.</p>
+                             <p><b>You:</b> What's my seat number?</p>
+                             <p><b>Agent:</b> Your seat number is <b>fourteen A</b>.</p>
+                         </div>
+                     </div>
+                      <div class="bg-white p-6 rounded-lg shadow-lg">
+                          <h3 class="text-2xl font-semibold mb-4 text-center">"My Lucky Numbers" ✨</h3>
+                          <p class="mb-4 text-center">Write a short, Instagram-style post about your lucky numbers.</p>
+                          <textarea class="w-full h-32 p-3 border-2 rounded-lg quiz-input" placeholder="My lucky number is 7. I have 2 best friends..."></textarea>
+                      </div>
+                 </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('[data-toggle]');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = document.getElementById(toggle.dataset.toggle);
+                    const icon = toggle.querySelector('span');
+                    if (content) {
+                        content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-180');
+                    }
+                });
+            });
+
+            const quizData = {
+                q1: { answer: 'seventeen', correct: false },
+                q2: { answer: 'twenty-six', correct: false },
+                q3: { answer: 'eight', correct: false },
+                q4: { answer: 'fifteen', correct: false },
+                q5: { answer: 'fifty-four', correct: false },
+                q6: { answer: 'ninety-nine', correct: false },
+                q7: { answer: '42', correct: false },
+                q8: { answer: '100', correct: false },
+                q9: { answer: '83', correct: false },
+                q10: { answer: '13', correct: false },
+                q11: { answer: 'eleventh', correct: false },
+                q12: { answer: 'forty', correct: false },
+                q13: { answer: 'twenty-second', correct: false },
+                q14: { answer: 'ninety', correct: false },
+                q15: { answer: 'twelfth', correct: false },
+                q16: { answer: 'thirty-first', correct: false },
+                q17: { answer: 'i am twelfth in line', correct: false },
+                q18: { answer: 'fifteen', correct: false },
+                q19: { answer: 'the thirty-first chapter was great', correct: false },
+                q20: { answer: 'eighteen', correct: false },
+            };
+
+            const totalQuestions = Object.keys(quizData).length;
+            let score = 0;
+
+            const ctx = document.getElementById('scoreChart').getContext('2d');
+            const scoreChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Your Score'],
+                    datasets: [{
+                        label: 'Correct Answers',
+                        data: [0],
+                        backgroundColor: ['#98D8C8'],
+                        borderColor: ['#82C0B0'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: totalQuestions,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                           display: false
+                        }
+                    }
+                }
+            });
+            
+            function updateChart() {
+                scoreChart.data.datasets[0].data[0] = score;
+                scoreChart.update();
+            }
+
+            const checkButtons = document.querySelectorAll('button[data-question]');
+            checkButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const questionId = button.dataset.question;
+                    const input = document.getElementById(questionId);
+                    const feedback = document.getElementById(questionId.replace('q', 'f'));
+                    const userAnswer = input.value.trim().toLowerCase().replace(/[.!,?]/g, '');
+                    
+                    if (userAnswer === quizData[questionId].answer) {
+                        feedback.textContent = 'Correct! ✨';
+                        feedback.classList.remove('text-red-500');
+                        feedback.classList.add('text-green-500', 'opacity-100');
+                        input.style.borderColor = '#48BB78';
+                        if (!quizData[questionId].correct) {
+                            score++;
+                            quizData[questionId].correct = true;
+                            updateChart();
+                        }
+                        button.disabled = true;
+                        input.disabled = true;
+                    } else {
+                        feedback.textContent = 'Not quite, try again! 🏐';
+                        feedback.classList.remove('text-green-500');
+                        feedback.classList.add('text-red-500', 'opacity-100');
+                         input.style.borderColor = '#F56565';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
